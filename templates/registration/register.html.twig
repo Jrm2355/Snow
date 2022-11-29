@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="col-md-12 text-center">
+        <h1>Inscription</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="form-signin w-100 m-auto">
+                {{ form_start(registrationForm) }}
+                    {{ form_widget(registrationForm) }}
+                    <button class="btn btn-success">{{ button_label|default('Valider') }}</button>
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </div>
+</div>       
+
+        </div>
+    </div>
+{% endblock %}
