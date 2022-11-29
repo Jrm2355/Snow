@@ -87,6 +87,9 @@ class TrickController extends AbstractController
     #[Route('/{id}', name: 'app_trick_show', methods: ['GET', 'POST'])]
     public function show(Request $request, Trick $trick, CommentRepository $commentRepository, MediaRepository $mediaRepository): Response
     {
+        $page = $request->get('page', 1);
+        $comments = $commentRepository->findBy(['trick' => $trick->getId()], [], 5, ($page-1)*5);
+       // dd($comments);
         $comment = new Comment();
         $comment_form = $this->createForm(CommentType::class, $comment);
         $comment_form->handleRequest($request);
@@ -107,7 +110,9 @@ class TrickController extends AbstractController
             'trick' => $trick,
             'comment_form' => $comment_form->createView(),
             'mediaMain' => $mediaMain[0],
-            'media' => $mediaAutre
+            'media' => $mediaAutre,
+            'page' => $page,
+            'comments' => $comments
         ]);
     }
 
