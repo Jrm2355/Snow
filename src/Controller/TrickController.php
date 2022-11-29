@@ -24,7 +24,6 @@ class TrickController extends AbstractController
     public function index(TrickRepository $trickRepository, Request $request): Response
     {
         $page = $request->get('page', 1);
-        // $tricks = $trickRepository->findAll();
         $tricks = $trickRepository->findBy([], [], 8 + (4 * ($page - 1)),0);
         return $this->render('trick/index.html.twig', [
             'tricks' => $tricks,
@@ -174,7 +173,6 @@ class TrickController extends AbstractController
         $mediaRepository->add($media, true);
 
         $oldMediaMain = $mediaRepository->findOneBy(array('trick' => $trickId, 'main' => true));
-        // dd($oldMediaMain);
         $oldMediaMain->setMain(false);
         $mediaRepository->add($oldMediaMain, true);
         return $this->redirectToRoute('app_trick_index');
