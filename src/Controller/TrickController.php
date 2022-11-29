@@ -89,7 +89,6 @@ class TrickController extends AbstractController
     {
         $page = $request->get('page', 1);
         $comments = $commentRepository->findBy(['trick' => $trick->getId()], [], 5, ($page-1)*5);
-       // dd($comments);
         $comment = new Comment();
         $comment_form = $this->createForm(CommentType::class, $comment);
         $comment_form->handleRequest($request);
