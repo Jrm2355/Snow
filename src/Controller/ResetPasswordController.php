@@ -162,7 +162,6 @@ class ResetPasswordController extends AbstractController
             ->subject('Your password reset request')
             ->html($this->renderView('reset_password/email.html.twig',[ 'resetToken' => $resetToken,]))
         ;
-        dd($email);
         $mailer->send($email);
 
         // Store the token object in session for retrieval in check-email route.
