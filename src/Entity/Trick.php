@@ -22,13 +22,15 @@ class Trick
     private ?string $description = null;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]
+    #[ORM\JoinColumn(onDelete:'CASCADE')]
     private Collection $comments;
 
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Media::class, orphanRemoval: false)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Media::class, orphanRemoval: true)]
+    #[ORM\JoinColumn(onDelete:'CASCADE')]
     private Collection $media;
 
     #[ORM\ManyToOne(inversedBy: 'tricks')]

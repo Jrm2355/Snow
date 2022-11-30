@@ -31,7 +31,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
+    #[Route('trick/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
     public function new(Request $request, TrickRepository $trickRepository, MediaRepository $mediaRepository): Response
     {
         $trick = new Trick();
@@ -115,7 +115,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
+    #[Route('trick/{id}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, MediaRepository $mediaRepository): Response
     {
         $trick_form = $this->createForm(TrickType::class, $trick);
@@ -161,7 +161,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'app_trick_delete')]
+    #[Route('trick/{id}/delete', name: 'app_trick_delete')]
     public function delete(Request $request, Trick $trick, TrickRepository $trickRepository): Response
     {
         $trickRepository->remove($trick, true);
@@ -169,7 +169,7 @@ class TrickController extends AbstractController
         return $this->redirectToRoute('app_trick_index');
     }
 
-    #[Route('/{id}/main', name: 'app_media_main')]
+    #[Route('trick/{id}/main', name: 'app_media_main')]
     public function becomeMain(Request $resquest, Media $media, MediaRepository $mediaRepository): Response
     {
         $media->setMain(true);
