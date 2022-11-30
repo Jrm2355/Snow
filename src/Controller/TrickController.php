@@ -20,7 +20,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/')]
 class TrickController extends AbstractController
 {
-    public  function nomWeb($text) {
+    public  function nomWeb(string $text): string
+    {
 
         $text = preg_replace('~[^\pL\d]+~u', '-', $text);
         $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
