@@ -38,7 +38,7 @@
                     <br>
                     {{ include('trick/_trick_form.html.twig', {'button_label': 'Valider'}) }}        
                     <br>
-                    <form action="{{ path('app_trick_delete', {'id' : trick.id }) }}">
+                    <form action="{{ path('app_trick_delete', {'slug' : trick.slug }) }}">
                         <button class="btn btn-danger btn-sm pull-right">Supprimer</button>
                     </form>
                     <br>

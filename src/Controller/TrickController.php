@@ -20,6 +20,22 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/')]
 class TrickController extends AbstractController
 {
+    public  function nomWeb($text) {
+
+        $text = preg_replace('~[^\pL\d]+~u', '-', $text);
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+        $text = preg_replace('~[^-\w]+~', '', $text);
+        $text = trim($text, '-');
+        $text = preg_replace('~-+~', '-', $text);
+        $text = strtolower($text);
+
+        if (empty($text)) {
+            return 'n-a';
+        }
+
+        return $text;
+    }
+
     #[Route('/', name: 'app_trick_index', methods: ['GET'])]
     public function index(TrickRepository $trickRepository, Request $request): Response
     {
@@ -41,6 +57,7 @@ class TrickController extends AbstractController
         if ($trick_form->isSubmitted() && $trick_form->isValid()) {
             $mediaPhoto = $trick_form->get('media')->getData();
             $trick->setUser($this->getUser());
+            $trick->setSlug($this->nomWeb($trick->getName()));
             $trickRepository->add($trick, true);
             $mainControle = 0;
             foreach ($mediaPhoto as $medium) {
@@ -84,7 +101,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_trick_show', methods: ['GET', 'POST'])]
+    #[Route('/{slug}', name: 'app_trick_show', methods: ['GET', 'POST'])]
     public function show(Request $request, Trick $trick, CommentRepository $commentRepository, MediaRepository $mediaRepository): Response
     {
         $page = $request->get('page', 1);
@@ -115,7 +132,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('trick/{id}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
+    #[Route('trick/{slug}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Trick $trick, TrickRepository $trickRepository, MediaRepository $mediaRepository): Response
     {
         $trick_form = $this->createForm(TrickType::class, $trick);
@@ -124,6 +141,7 @@ class TrickController extends AbstractController
         if ($trick_form->isSubmitted() && $trick_form->isValid()) {
             $mediaPhoto = $trick_form->get('media')->getData();
             $trick->setUser($this->getUser());
+            $trick->setSlug($this->nomWeb($trick->getName()));
             $trickRepository->add($trick, true);
             foreach ($mediaPhoto as $medium) {
                 // On génère un nouveau nom de fichier 
@@ -161,7 +179,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('trick/{id}/delete', name: 'app_trick_delete')]
+    #[Route('trick/{slug}/delete', name: 'app_trick_delete')]
     public function delete(Request $request, Trick $trick, TrickRepository $trickRepository): Response
     {
         $trickRepository->remove($trick, true);
@@ -169,7 +187,7 @@ class TrickController extends AbstractController
         return $this->redirectToRoute('app_trick_index');
     }
 
-    #[Route('trick/{id}/main', name: 'app_media_main')]
+    #[Route('trick/{slug}/main', name: 'app_media_main')]
     public function becomeMain(Request $resquest, Media $media, MediaRepository $mediaRepository): Response
     {
         $media->setMain(true);

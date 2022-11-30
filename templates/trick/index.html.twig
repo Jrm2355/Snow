@@ -16,10 +16,10 @@
                                 <img class="card-img-top" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;" src={{ trick.media[0].source }} data-holder-rendered="true">
                             <div class="card-body">
                                 <p class="card-text">
-                                    <a href="{{ path('app_trick_show', {'id': trick.id}) }}">{{ trick.name }}</a>
+                                    <a href="{{ path('app_trick_show', {'slug': trick.slug}) }}">{{ trick.name }}</a>
                                     {% if app.user %}
-                                        <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{{ path('app_trick_edit', {'id': trick.id}) }}">edit</a></button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{{ path('app_trick_delete', {'id': trick.id}) }}">Supprimer</a></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{{ path('app_trick_edit', {'slug': trick.slug}) }}">edit</a></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{{ path('app_trick_delete', {'slug': trick.slug}) }}">Supprimer</a></button>
                                     {% endif %}
                                 </p>                                        
                             </div>

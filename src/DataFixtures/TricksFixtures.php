@@ -225,6 +225,8 @@ class TricksFixtures extends Fixture
                     $trick->setDescription($t["description"]);
                     $trick->setUser($user);
                     $trick->setCategory($category);
+                    $slug = str_replace(" ", "-",$t["name"]);
+                    $trick->setSlug($slug);
                     $manager->persist($trick);
 
                     foreach ($t["media"] as $m) {
