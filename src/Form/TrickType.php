@@ -20,7 +20,7 @@ class TrickType extends AbstractType
         $builder
             ->add('name', TextType::class, ['label' => 'Nom du trick'])
             ->add('description', TextareaType::class, ['label' => 'Description'])
-            ->add('category')
+            ->add('category', null,['label' => 'Groupe'])
             ->add('media', FileType::class,[ 'label' => 'Charger vos photos jpg', 'multiple' => true, 'mapped' => false, 'required' => true ])
             ->add('mediaVideo', TextAreaType::class,[ 'label' => 'Donnez le lien url de la video. Une vidéo par ligne', 'mapped' => false, 'required' => false ])
         ;
